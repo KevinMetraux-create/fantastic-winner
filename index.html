@@ -745,10 +745,36 @@
     document.getElementById('stepLabel').textContent = 'Complete!';
     if (type === 'success') {
       document.getElementById('successScreen').classList.add('active');
-      console.log('Lead data:', JSON.stringify(answers, null, 2));
+      sendLead();
     } else {
       document.getElementById('disqScreen').classList.add('active');
+      sendLead();
     }
+  }
+
+  function sendLead() {
+    const contact = answers.q10 || {};
+    const payload = {
+      name: contact.name || '',
+      phone: contact.phone || '',
+      email: contact.email || '',
+      home_address: answers.q9 || '',
+      owns_home: answers.q1 || '',
+      roof_type: answers.q2 || '',
+      roof_age: answers.q3 || '',
+      shade: answers.q4 || '',
+      roof_direction: answers.q5 || '',
+      monthly_bill: answers.q6 || '',
+      interested_zero_down: answers.q7 || '',
+      household_interests: (answers.q8 || []).join(', '),
+      qualified: answers.q1 === 'Yes' ? 'Yes' : 'No — does not own home'
+    };
+
+    fetch('https://formspree.io/f/mnjyyeqe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(err => console.error('Lead submission failed:', err));
   }
 
   updateProgress();
