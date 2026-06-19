@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>See If You Qualify — $0 Down Solar</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #F05A28;
+    --orange-deep: #D44A1A;
+    --orange-light: #FEF0EB;
+    --navy: #1A2E44;
+    --navy-mid: #2C4460;
+    --gray-bg: #F7F8FA;
+    --gray-border: #E2E6EA;
+    --gray-text: #5A6A7A;
+    --white: #FFFFFF;
+    --danger: #E53E3E;
+    --success: #38A169;
+    --radius: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--gray-bg);
+    color: var(--navy);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── NAV BAR ── */
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--orange); }
+
+  .topbar-phone {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gray-text);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1A2E44 0%, #2C4460 100%);
+    padding: 64px 20px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--gray-bg);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(240,90,40,0.2);
+    border: 1px solid rgba(240,90,40,0.4);
+    color: #FFB59A;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  h1 span { color: #FF8A60; }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 460px;
+    margin: 0 auto 36px;
+    font-weight: 600;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--white);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 16px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 6px 24px rgba(240,90,40,0.4);
+  }
+
+  .hero-cta:hover { background: var(--orange-deep); transform: translateY(-2px); }
+
+  .trust-row {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .trust-item .dot {
+    width: 18px; height: 18px;
+    background: rgba(240,90,40,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: #FF8A60;
+    flex-shrink: 0;
+  }
+
+  /* ── FORM WRAPPER ── */
+  .form-shell {
+    max-width: 620px;
+    margin: -50px auto 60px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .form-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px 40px 36px;
+    box-shadow: 0 8px 40px rgba(26,46,68,0.12), 0 2px 8px rgba(26,46,68,0.06);
+  }
+
+  @media (max-width: 520px) {
+    .form-card { padding: 28px 22px; }
+  }
+
+  /* ── PROGRESS ── */
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .step-label {
+    font-size: 0.78rem;
+    color: var(--gray-text);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pct-label {
+    font-size: 0.78rem;
+    color: var(--orange);
+    font-weight: 800;
+  }
+
+  .progress-bar {
+    height: 5px;
+    background: var(--gray-border);
+    border-radius: 100px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #FF9A70);
+    border-radius: 100px;
+    transition: width 0.45s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── QUESTION ── */
+  .question { display: none; }
+  .question.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+
+  .q-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 22px;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--white);
+    border: 2px solid var(--gray-border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--navy);
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: border-color 0.15s, background 0.15s;
+    width: 100%;
+  }
+
+  .option-btn:hover {
+    border-color: var(--orange);
+    background: var(--orange-light);
+  }
+
+  .option-btn.selected {
+    border-color: var(--orange);
+    background: var(--orange-light);
+    color: var(--navy);
+  }
+
+  .option-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-border);
+    flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .option-btn.selected .option-dot {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  .option-btn.selected .option-dot::after {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--white);
+  }
+
+  .option-btn .option-square {
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--gray-border);
+    flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .option-btn.selected .option-square {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  .option-btn.selected .option-square::after {
+    content: '✓';
+    font-size: 11px;
+    color: var(--white);
+    font-weight: 900;
+  }
+
+  /* ── TEXT INPUTS ── */
+  .field-group { display: flex; flex-direction: column; gap: 14px; }
+
+  .field-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--gray-text);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .field-wrap { display: flex; flex-direction: column; }
+
+  .text-input {
+    background: var(--white);
+    border: 2px solid var(--gray-border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    color: var(--navy);
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Nunito Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  .text-input::placeholder { color: #B0BEC5; font-weight: 600; }
+  .text-input:focus { border-color: var(--orange); }
+
+  .other-wrap { margin-top: 8px; display: none; }
+  .other-wrap.show { display: block; }
+
+  /* ── NAV ── */
+  .nav-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .btn-back {
+    background: transparent;
+    border: 2px solid var(--gray-border);
+    color: var(--gray-text);
+    border-radius: 100px;
+    padding: 12px 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-back:hover { border-color: var(--navy); color: var(--navy); }
+
+  .btn-next {
+    flex: 1;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 18px rgba(240,90,40,0.3);
+  }
+
+  .btn-next:hover { background: var(--orange-deep); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .error-msg {
+    color: var(--danger);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* ── SUCCESS ── */
+  .success-screen { display: none; text-align: center; padding: 16px 0; }
+  .success-screen.active { display: block; animation: fadeUp 0.4s ease; }
+
+  .success-icon {
+    width: 76px; height: 76px;
+    background: #EBF8EF;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+    font-size: 34px;
+  }
+
+  .success-screen h2 {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .success-screen p { color: var(--gray-text); font-size: 0.95rem; font-weight: 600; max-width: 360px; margin: 0 auto 22px; }
+
+  .success-detail {
+    background: #EBF8EF;
+    border: 1.5px solid #9AE6B4;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    color: var(--success);
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  /* ── DISQUALIFIED ── */
+  .disq-screen { display: none; text-align: center; padding: 16px 0; }
+  .disq-screen.active { display: block; animation: fadeUp 0.4s ease; }
+
+  .disq-icon {
+    width: 76px; height: 76px;
+    background: #FFF5F5;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+    font-size: 34px;
+  }
+
+  .disq-screen h2 { font-size: 1.5rem; font-weight: 900; color: var(--navy); margin-bottom: 10px; }
+  .disq-screen p { color: var(--gray-text); font-size: 0.93rem; font-weight: 600; max-width: 340px; margin: 0 auto; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px 20px;
+    color: var(--gray-text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    opacity: 0.7;
+    border-top: 1px solid var(--gray-border);
+    background: var(--white);
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="logo">Solar<span>Check</span></div>
+  <div class="topbar-phone">Questions? Call us anytime</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">⚡ Limited Spots Available</div>
+  <h1>Find out if you qualify<br>for <span>$0 down solar</span></h1>
+  <p class="hero-sub">No financing required. See your savings potential in under 30 seconds.</p>
+  <button class="hero-cta" onclick="document.querySelector('.form-shell').scrollIntoView({behavior:'smooth'})">Check My Eligibility →</button>
+  <div class="trust-row">
+    <span class="trust-item"><span class="dot">✓</span> No credit card</span>
+    <span class="trust-item"><span class="dot">✓</span> Takes 30 seconds</span>
+    <span class="trust-item"><span class="dot">✓</span> 100% free</span>
+  </div>
+</section>
+
+<!-- FORM -->
+<div class="form-shell">
+  <div class="form-card">
+
+    <div class="progress-header">
+      <span class="step-label" id="stepLabel">Step 1 of 10</span>
+      <span class="pct-label" id="pctLabel">0% complete</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+    <!-- Q1 -->
+    <div class="question active" data-q="1">
+      <div class="q-number">Question 1</div>
+      <div class="q-text">Do you own your home?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Yes" onclick="selectOption(this)"><span class="option-dot"></span> Yes</button>
+        <button class="option-btn" data-val="No" onclick="selectOption(this)"><span class="option-dot"></span> No</button>
+      </div>
+      <div class="error-msg" id="err1">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question" data-q="2">
+      <div class="q-number">Question 2</div>
+      <div class="q-text">What type of roof do you have?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Asphalt Shingle" onclick="selectOption(this)"><span class="option-dot"></span> Asphalt Shingle</button>
+        <button class="option-btn" data-val="Tile" onclick="selectOption(this)"><span class="option-dot"></span> Tile</button>
+        <button class="option-btn" data-val="Metal" onclick="selectOption(this)"><span class="option-dot"></span> Metal</button>
+        <button class="option-btn" data-val="Flat Roof" onclick="selectOption(this)"><span class="option-dot"></span> Flat Roof</button>
+        <button class="option-btn" data-val="Other" onclick="selectOption(this)"><span class="option-dot"></span> Other</button>
+      </div>
+      <div class="other-wrap" id="otherRoofWrap">
+        <input class="text-input" id="otherRoof" type="text" placeholder="Please describe your roof type…" />
+      </div>
+      <div class="error-msg" id="err2">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question" data-q="3">
+      <div class="q-number">Question 3</div>
+      <div class="q-text">How old is your roof?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Less than 5 years" onclick="selectOption(this)"><span class="option-dot"></span> Less than 5 years</button>
+        <button class="option-btn" data-val="5–10 years" onclick="selectOption(this)"><span class="option-dot"></span> 5–10 years</button>
+        <button class="option-btn" data-val="10–20 years" onclick="selectOption(this)"><span class="option-dot"></span> 10–20 years</button>
+        <button class="option-btn" data-val="Over 20 years" onclick="selectOption(this)"><span class="option-dot"></span> Over 20 years</button>
+      </div>
+      <div class="error-msg" id="err3">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question" data-q="4">
+      <div class="q-number">Question 4</div>
+      <div class="q-text">How much shade does your roof get during the day?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Full sun all day" onclick="selectOption(this)"><span class="option-dot"></span> Full sun all day</button>
+        <button class="option-btn" data-val="Some shade (trees, buildings)" onclick="selectOption(this)"><span class="option-dot"></span> Some shade (trees, buildings)</button>
+        <button class="option-btn" data-val="Mostly shaded" onclick="selectOption(this)"><span class="option-dot"></span> Mostly shaded</button>
+      </div>
+      <div class="error-msg" id="err4">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question" data-q="5">
+      <div class="q-number">Question 5</div>
+      <div class="q-text">What direction does your roof mainly face?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="South-facing" onclick="selectOption(this)"><span class="option-dot"></span> South-facing</button>
+        <button class="option-btn" data-val="East- or West-facing" onclick="selectOption(this)"><span class="option-dot"></span> East- or West-facing</button>
+        <button class="option-btn" data-val="North-facing" onclick="selectOption(this)"><span class="option-dot"></span> North-facing</button>
+        <button class="option-btn" data-val="Not sure" onclick="selectOption(this)"><span class="option-dot"></span> Not sure</button>
+      </div>
+      <div class="error-msg" id="err5">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question" data-q="6">
+      <div class="q-number">Question 6</div>
+      <div class="q-text">What's your average monthly electric bill?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Under $100" onclick="selectOption(this)"><span class="option-dot"></span> Under $100</button>
+        <button class="option-btn" data-val="$100–$200" onclick="selectOption(this)"><span class="option-dot"></span> $100–$200</button>
+        <button class="option-btn" data-val="$200–$300" onclick="selectOption(this)"><span class="option-dot"></span> $200–$300</button>
+        <button class="option-btn" data-val="Over $300" onclick="selectOption(this)"><span class="option-dot"></span> Over $300</button>
+      </div>
+      <div class="error-msg" id="err6">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question" data-q="7">
+      <div class="q-number">Question 7</div>
+      <div class="q-text">Are you interested in $0 down — no financing required?</div>
+      <div class="options" data-type="single">
+        <button class="option-btn" data-val="Yes" onclick="selectOption(this)"><span class="option-dot"></span> Yes</button>
+        <button class="option-btn" data-val="No" onclick="selectOption(this)"><span class="option-dot"></span> No</button>
+        <button class="option-btn" data-val="Maybe, tell me more" onclick="selectOption(this)"><span class="option-dot"></span> Maybe, tell me more</button>
+      </div>
+      <div class="error-msg" id="err7">Please select an option to continue.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question" data-q="8">
+      <div class="q-number">Question 8</div>
+      <div class="q-text">What is your household most interested in? <span style="font-size:0.75rem;font-weight:600;color:var(--gray-text)">(Select all that apply)</span></div>
+      <div class="options" data-type="multi">
+        <button class="option-btn" data-val="Reducing my electric bill" onclick="toggleMulti(this)"><span class="option-square"></span> Reducing my electric bill</button>
+        <button class="option-btn" data-val="Backup power" onclick="toggleMulti(this)"><span class="option-square"></span> Backup power</button>
+        <button class="option-btn" data-val="Avoiding future rate increases" onclick="toggleMulti(this)"><span class="option-square"></span> Avoiding future rate increases</button>
+      </div>
+      <div class="error-msg" id="err8">Please select at least one option.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question" data-q="9">
+      <div class="q-number">Question 9</div>
+      <div class="q-text">What is your home address?</div>
+      <input class="text-input" id="address" type="text" placeholder="123 Main St, City, State ZIP" />
+      <div class="error-msg" id="err9">Please enter your home address.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question" data-q="10">
+      <div class="q-number">Question 10</div>
+      <div class="q-text">What's the best way to reach you?</div>
+      <div class="field-group">
+        <div class="field-wrap">
+          <div class="field-label">Full Name</div>
+          <input class="text-input" id="name" type="text" placeholder="Jane Smith" />
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">Phone Number</div>
+          <input class="text-input" id="phone" type="tel" placeholder="(555) 000-0000" />
+        </div>
+        <div class="field-wrap">
+          <div class="field-label">Email Address</div>
+          <input class="text-input" id="email" type="email" placeholder="jane@example.com" />
+        </div>
+      </div>
+      <div class="error-msg" id="err10">Please fill in all contact fields.</div>
+    </div>
+
+    <!-- Success -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">☀️</div>
+      <h2>You're pre-qualified!</h2>
+      <p>Great news — based on your answers, you may qualify for $0 down solar. A specialist will reach out within 24 hours.</p>
+      <div class="success-detail">✓ Your information has been submitted successfully</div>
+      <p style="font-size:0.82rem;">Check your inbox for a confirmation email.</p>
+    </div>
+
+    <!-- Disqualified -->
+    <div class="disq-screen" id="disqScreen">
+      <div class="disq-icon">🏠</div>
+      <h2>Not quite yet</h2>
+      <p>Solar works best for homeowners. If your situation changes, we'd love to help — and feel free to refer a homeowner friend!</p>
+    </div>
+
+    <!-- Nav -->
+    <div class="nav-row" id="navRow">
+      <button class="btn-back" id="btnBack" onclick="goBack()" style="display:none">← Back</button>
+      <button class="btn-next" id="btnNext" onclick="goNext()">Continue →</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 SolarCheck · Your information is never sold · Privacy Policy</footer>
+
+<script>
+  let current = 1;
+  const total = 10;
+  const answers = {};
+
+  function updateProgress() {
+    const pct = Math.round(((current - 1) / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('pctLabel').textContent = pct + '% complete';
+    document.getElementById('stepLabel').textContent = `Step ${current} of ${total}`;
+    document.getElementById('btnBack').style.display = current > 1 ? 'inline-block' : 'none';
+    document.getElementById('btnNext').textContent = current === total ? 'See My Results →' : 'Continue →';
+  }
+
+  function selectOption(btn) {
+    btn.closest('.options').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    if (current === 2) {
+      document.getElementById('otherRoofWrap').classList.toggle('show', btn.dataset.val === 'Other');
+    }
+    hideError(current);
+  }
+
+  function toggleMulti(btn) {
+    btn.classList.toggle('selected');
+    hideError(current);
+  }
+
+  function hideError(q) {
+    const el = document.getElementById('err' + q);
+    if (el) el.classList.remove('show');
+  }
+
+  function validate() {
+    const q = document.querySelector(`.question[data-q="${current}"]`);
+    if (!q) return true;
+    const type = q.querySelector('.options')?.dataset.type;
+
+    if (type === 'single') {
+      const sel = q.querySelector('.option-btn.selected');
+      if (!sel) { document.getElementById('err' + current)?.classList.add('show'); return false; }
+      let val = sel.dataset.val;
+      if (val === 'Other' && current === 2) val = document.getElementById('otherRoof').value.trim() || 'Other';
+      answers['q' + current] = val;
+    } else if (type === 'multi') {
+      const sels = [...q.querySelectorAll('.option-btn.selected')].map(b => b.dataset.val);
+      if (!sels.length) { document.getElementById('err' + current)?.classList.add('show'); return false; }
+      answers['q' + current] = sels;
+    } else {
+      if (current === 9) {
+        const v = document.getElementById('address').value.trim();
+        if (!v) { document.getElementById('err9').classList.add('show'); return false; }
+        answers['q9'] = v;
+      }
+      if (current === 10) {
+        const n = document.getElementById('name').value.trim();
+        const p = document.getElementById('phone').value.trim();
+        const e = document.getElementById('email').value.trim();
+        if (!n || !p || !e) { document.getElementById('err10').classList.add('show'); return false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) {
+          document.getElementById('err10').textContent = 'Please enter a valid email address.';
+          document.getElementById('err10').classList.add('show'); return false;
+        }
+        answers['q10'] = { name: n, phone: p, email: e };
+      }
+    }
+    return true;
+  }
+
+  function goNext() {
+    if (!validate()) return;
+    if (current === 1 && answers['q1'] === 'No') { showScreen('disq'); return; }
+    if (current === total) { showScreen('success'); return; }
+    showQuestion(current + 1);
+  }
+
+  function goBack() { if (current > 1) showQuestion(current - 1); }
+
+  function showQuestion(n) {
+    document.querySelector(`.question[data-q="${current}"]`).classList.remove('active');
+    current = n;
+    document.querySelector(`.question[data-q="${current}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: document.querySelector('.form-shell').offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function showScreen(type) {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+    document.getElementById('navRow').style.display = 'none';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('pctLabel').textContent = '100% complete';
+    document.getElementById('stepLabel').textContent = 'Complete!';
+    if (type === 'success') {
+      document.getElementById('successScreen').classList.add('active');
+      console.log('Lead data:', JSON.stringify(answers, null, 2));
+    } else {
+      document.getElementById('disqScreen').classList.add('active');
+    }
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
